@@ -57,12 +57,13 @@ Before the first measure I checked with `tcpdump` if packets successfully got th
 ```bash
 kubectl exec -it net-debug-6d5ffdbdc8-7s7bh – tcpdump -vvni eth0
 ```
-Overall, three type of TOS value have been used: 0x10 for the highest priority, 0x8 for the lower priority and 0x0 when no priority has given. To simulate real circumstances there was a “background” traffic and through the different measures I gave different type of priority to it, sometimes higher than the main traffic. Parameter of the `iperf` were these:
+Overall, three type of TOS value have been used: 0x10 for the highest priority, 0x8 for the lower priority and 0x0 when no priority has given. To simulate real circumstances there was a “background” traffic and through the different measures I gave different type of priority to it, sometimes higher than the main traffic. Parameters of the `iperf` were these:
 ```bash
 kubectl exec -it <iperf-client-pod-name> -- iperf -c <net-debug-pod-ip> -u -b 100g -M 100 -t <time in sec to transmit for> -S <tos value>
 ```
 As you could see, the protocol was UDP. For the main traffic I never set a `-t` parameter which means that it was always lasts ten seconds while I set the background traffic for fifteen seconds so I could comfortably start the main traffic while the background was running. Results will contain the different type of QoS, Minikube and localhost combinations I used.
 
 ## Results
+
 
 ## Conclusion
